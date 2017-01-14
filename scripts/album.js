@@ -30,6 +30,27 @@
      ]
  };
 
+ // Another Example Album
+ var albumMstowe = {
+     title: 'Narcissism',
+     artist: 'Mike Stowe',
+     label: 'ME',
+     year: '1991',
+     albumArtUrl: 'assets/images/album_covers/10.png',
+     songs: [
+         { title: 'Birth', duration: '3:42' },
+         { title: 'The perfect baby', duration: '2:45' },
+         { title: 'Early signs of genius', duration: '4:54'},
+         { title: 'Bad boy phase', duration: '0:51' },
+         { title: 'Continued genius', duration: '13:28'},
+         { title: 'Death', duration: '3:19'},
+         { title: 'Legacy', duration: '9:46'}
+     ]
+ };
+
+var albums = [albumPicasso, albumMarconi, albumMstowe];
+var currentAlbum = 0;
+
 var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -42,7 +63,9 @@ var createSongRow = function(songNumber, songName, songLength) {
      return template;
  };
 
-var setCurrentAlbum = function(album) {
+var setCurrentAlbum = function(albumIndex) {
+     currentAlbum = albumIndex;
+     var album = albums[currentAlbum];
      var albumTitle = document.getElementsByClassName('album-view-title')[0];
      var albumArtist = document.getElementsByClassName('album-view-artist')[0];
      var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
@@ -62,5 +85,9 @@ var setCurrentAlbum = function(album) {
  };
  
  window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+     setCurrentAlbum(0);
  };
+
+document.getElementsByClassName('album-cover-art')[0].onclick = function () {
+    setCurrentAlbum((currentAlbum+1)%3);
+};
