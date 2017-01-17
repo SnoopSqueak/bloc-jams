@@ -181,6 +181,24 @@ var previousSong = function() {
     
 };
 
+var togglePlayFromPlayerBar = function () {
+    if (currentSoundFile.isPaused()) {
+        //Change the song number cell from a play button to a pause button
+        getSongNumberCell(currentlyPlayingSongNumber).html(pauseButtonTemplate);
+        //Change the HTML of the player bar's play button to a pause button
+        $('.main-controls .play-pause').html(playerBarPauseButton);
+        //Play the song
+        currentSoundFile.play();
+    } else {
+        //Change the song number cell from a pause button to a play button
+        $('.main-controls .play-pause').html(playerBarPlayButton);
+        //Change the HTML of the player bar's pause button to a play button
+        getSongNumberCell(currentlyPlayingSongNumber).html(playButtonTemplate);
+       // Pause the song
+        currentSoundFile.pause();
+    }
+};
+
  var trackIndex = function(album, song) {
      return album.songs.indexOf(song);
  };
@@ -206,11 +224,13 @@ var updatePlayerBarSong = function() {
 
  var $previousButton = $('.main-controls .previous');
  var $nextButton = $('.main-controls .next');
+var $playPauseButton = $('.main-controls .play-pause');
 
  $(document).ready(function() {
      setCurrentAlbum(albumPicasso);
      $previousButton.click(previousSong);
      $nextButton.click(nextSong);
+     $playPauseButton.click(togglePlayFromPlayerBar);
  });
 
 document.getElementsByClassName('album-cover-art')[0].onclick = function () {
